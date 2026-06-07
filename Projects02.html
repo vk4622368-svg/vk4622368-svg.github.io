@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal — Video Editor & Creative Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--card:#121212;
+  --text:#f0ede8;--muted:#666;--dim:#2a2a2a;
+  --accent:#E8541D;--accent-lite:rgba(232,84,29,0.18);
+  --border:#1c1c1c;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cd{position:fixed;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .2s,width .2s,height .2s}
+#cr{position:fixed;width:34px;height:34px;border:1.5px solid rgba(232,84,29,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+
+/* GRAIN */ 
+.grain{position:fixed;inset:0;pointer-events:none;z-index:600;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .45s steps(1) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,1%)}30%{transform:translate(-1%,4%)}40%{transform:translate(4%,-2%)}50%{transform:translate(-3%,3%)}60%{transform:translate(2%,-4%)}70%{transform:translate(-4%,1%)}80%{transform:translate(1%,3%)}90%{transform:translate(3%,-1%)}
+}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:26px 56px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,8,.96) 0%,transparent 100%);transition:background .3s,border-bottom .3s}
+.nav.scrolled{background:rgba(8,8,8,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--text);text-decoration:none}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--text)}
+.nav-btn{border:1.5px solid var(--accent);color:var(--accent);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 28px;text-decoration:none;display:inline-block;transition:background .3s,color .3s;background:transparent}
+.nav-btn:hover{background:var(--accent);color:#fff}
+
+/* SECTION BASE */
+.sec{padding:120px 56px}
+.s-label{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.s-label::before{content:'';width:26px;height:1px;background:var(--accent);flex-shrink:0}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,6.5vw,82px);line-height:.93;letter-spacing:.01em}
+
+/* Gradient thumbs */
+.t1{background:linear-gradient(135deg,#1a0840 0%,#3d1168 45%,#7a2bde 70%,#e8541d 100%)}
+.t2{background:linear-gradient(160deg,#050e1e 0%,#0a2040 50%,#1a4a8a 100%)}
+.t3{background:linear-gradient(135deg,#1a0a06 0%,#5a1a08 40%,#e8541d 100%)}
+.t4{background:linear-gradient(135deg,#050505 0%,#181818 40%,#2d2d2d 100%)}
+.t5{background:linear-gradient(135deg,#0a0f1a 0%,#152040 40%,#1e3060 100%)}
+.t6{background:linear-gradient(135deg,#0f0b02 0%,#2a2008 50%,#6b5210 100%)}
+.t7{background:linear-gradient(135deg,#160202 0%,#350d0d 50%,#640000 100%)}
+/* scanlines on thumbs */
+.wthumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);z-index:1;pointer-events:none}
+/* light leaks */
+.t1::after{content:'';position:absolute;top:-20%;left:40%;width:50%;height:90%;background:radial-gradient(ellipse,rgba(232,84,29,.3) 0%,transparent 70%)}
+.t2::after{content:'';position:absolute;top:5%;right:5%;width:55%;height:65%;background:radial-gradient(ellipse,rgba(80,130,255,.22) 0%,transparent 70%)}
+.t3::after{content:'';position:absolute;bottom:0;right:15%;width:60%;height:55%;background:radial-gradient(ellipse,rgba(232,84,29,.4) 0%,transparent 70%)}
+.thumb-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:56px;opacity:.18;z-index:2}
+.thumb-lbl{position:absolute;bottom:14px;left:14px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.15);z-index:2}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center}
+.aimg-wrap{position:relative}
+.aimg{width:100%;aspect-ratio:3/4;background:var(--card);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.aimg-bg{position:absolute;inset:0;background:linear-gradient(135deg,#150a04 0%,#3d1a08 50%,rgba(232,84,29,.12) 100%)}
+.aimg-ph{font-size:130px;opacity:.1;position:relative;z-index:1}
+.aimg-border{position:absolute;right:-18px;bottom:-18px;width:calc(100% - 36px);height:calc(100% - 36px);border:2px solid rgba(232,84,29,.35);pointer-events:none}
+.about-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,5.5vw,68px);line-height:.93;margin-bottom:22px}
+.about-body{font-size:15px;color:var(--muted);line-height:1.82;margin-bottom:30px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.stag{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);color:#666;transition:all .25s;cursor:none}
+.stag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* CONTACT */
+.contact-sec{background:var(--bg2);text-align:center}
+.contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,11.5vw,158px);line-height:.87;margin-bottom:24px;letter-spacing:-.01em}
+.contact-big em{font-style:normal;color:var(--accent)}
+.contact-sub{font-size:15px;color:var(--muted);line-height:1.76;max-width:440px;margin:0 auto 38px}
+.contact-email{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,2.4vw,28px);letter-spacing:3px;color:var(--accent);text-decoration:none;margin-bottom:46px;transition:opacity .25s}
+.contact-email:hover{opacity:.6}
+.socials{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.slink{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;display:inline-flex;align-items:center;gap:7px}
+.slink::before{content:'↗';font-size:13px}
+.slink:hover{color:var(--accent)}
+
+/* FOOTER */
+.footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 56px;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-agency{font-size:12px;color:var(--muted);letter-spacing:1px}
+.footer-agency span{color:var(--accent)}
+.footer-copy{font-size:12px;color:#333}
+
+/* ANIMATIONS */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(38px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav{padding:20px 28px}
+  .nav-links{display:none}
+  .sec,.hero{padding:80px 28px}
+  .hero{padding-bottom:80px}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-card:nth-child(2){border-right:none}
+  .work-grid{grid-template-columns:1fr;grid-auto-rows:220px}
+  .wcard:first-child{grid-column:1}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .about-grid{grid-template-columns:1fr}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:28px}
+  .footer{flex-direction:column;gap:14px;text-align:center;padding:24px 28px}
+  .hero-watermark{display:none}
+  .stats{padding:60px 28px}
+
+  /*Videos CSS*/
+.projects-grid{
+    width:90%;
+    max-width:1400px;
+    margin:60px auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:25px;
+}
+
+.project-item{
+    background:#111;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.project-item video{
+    width:100%;
+    height:650px;
+
+    object-fit:cover;
+
+    display:block;
+}
+.project-item video{
+    width:100%;
+    aspect-ratio:9/16;
+    object-fit:cover;
+}
+}
+
+</style>
+</head>
+<body>
+  <!-- CURSOR -->
+<div id="cd"></div>
+<div id="cr"></div>
+<!-- GRAIN -->
+<div class="grain"></div>
+
+<section class="projects-grid">
+
+    <div class="project-item">
+        <video autoplay muted loop playsinline controls>
+            <source src="videos/Sequence 01.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="project-item">
+        <video autoplay muted loop playsinline controls>
+            <source src="videos/video2.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="project-item">
+        <video autoplay muted loop playsinline controls>
+            <source src="videos/video3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="project-item">
+        <video autoplay muted loop playsinline controls>
+            <source src="videos/video4.mp4" type="video/mp4">
+        </video>
+    </div>
+
+</section>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-logo">VISHAAL<em>.EDITOR</em></a>
+  <ul class="nav-links">
+  </ul>
+  <a href="#contact" class="nav-btn">Hire Me</a>
+</nav>
+<!-- ======= CONTACT ======= -->
+<section class="sec contact-sec" id="contact">
+  <div class="s-label rv" style="justify-content:center">Get In Touch</div>
+  <h2 class="contact-big rv d1">LET'S<br><em>CREATE</em><br>TOGETHER</h2>
+  <p class="contact-sub rv d2">Got a project in mind? Brand film, viral reel, or full content strategy — let's build something that converts.</p>
+  <a href="mailto:vk4622368@gmail.com" class="contact-email rv d2">vk4622368@gmail.com</a>
+  <div class="socials rv d3">
+    <a href="https://instagram.com/vishaall.editor" class="slink">Instagram</a>
+    <a href="https://youtube.com/@vishaelkashyap?si=SLP75PUChvgat6Eo" class="slink">YouTube</a>
+    <a href="https://www.linkedin.com/in/vishal-kashyap-716106372?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="slink">LinkedIn</a>
+    <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" class="slink">Email</a>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">VISHAALL<em>.editor</em></span>
+  <!-- <span class="footer-agency">TMT <span>Creative House</span></span> -->
+  <span class="footer-copy">© 2026 · All rights reserved</span>
+</footer>
+<script>
+// Cursor
+const cd = document.getElementById('cd');
+const cr = document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(anim)})();
+document.querySelectorAll('a,button,.svc-card,.wcard,.stag').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cd.style.transform='translate(-50%,-50%) scale(1.9)';cr.style.width='50px';cr.style.height='50px';cr.style.borderColor='rgba(232,84,29,.75)'});
+  el.addEventListener('mouseleave',()=>{cd.style.transform='translate(-50%,-50%) scale(1)';cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(232,84,29,.5)'});
+});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80));
+
+// Reveal
+const ro=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+// Counter
+function cnt(el,end,suf){
+  const dur=1900,t0=performance.now();
+  function run(t){const p=Math.min((t-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*end)+suf;if(p<1)requestAnimationFrame(run);else el.textContent=end+suf}
+  requestAnimationFrame(run);
+}
+const statsEl=document.querySelector('.stats');
+const so=new IntersectionObserver(en=>{if(en[0].isIntersecting){document.querySelectorAll('.stat-n').forEach(el=>cnt(el,+el.dataset.t,el.dataset.s||''));so.disconnect()}},{threshold:.5});
+if(statsEl)so.observe(statsEl);
+
+// Filter
+document.querySelectorAll('.ftab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const f=tab.dataset.f;
+    document.querySelectorAll('.wcard').forEach(c=>{
+      const show=f==='all'||c.dataset.c===f;
+      c.style.display=show?'':'none';
+      if(show){c.style.opacity='0';setTimeout(()=>{c.style.transition='opacity .4s';c.style.opacity='1'},20)}
+    });
+  });
+});
+</script>
+</body>
