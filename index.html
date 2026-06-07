@@ -22,12 +22,12 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 #cd{position:fixed;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .2s,width .2s,height .2s}
 #cr{position:fixed;width:34px;height:34px;border:1.5px solid rgba(232,84,29,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
 
-/* GRAIN 
+/* GRAIN */ 
 .grain{position:fixed;inset:0;pointer-events:none;z-index:600;opacity:.038;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:grain .45s steps(1) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,1%)}30%{transform:translate(-1%,4%)}40%{transform:translate(4%,-2%)}50%{transform:translate(-3%,3%)}60%{transform:translate(2%,-4%)}70%{transform:translate(-4%,1%)}80%{transform:translate(1%,3%)}90%{transform:translate(3%,-1%)}
-}*/
+}
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:26px 56px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,8,.96) 0%,transparent 100%);transition:background .3s,border-bottom .3s}
@@ -85,6 +85,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 .s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,6.5vw,82px);line-height:.93;letter-spacing:.01em}
 
 /* SERVICES */
+.svc-icon img{width:60px;height:60px;object-fit:contain;position: left 280px;}
 .svc-sec{background:var(--bg2)}
 .svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
 .svc-sub{max-width:300px;font-size:14px;line-height:1.75;color:var(--muted)}
@@ -125,6 +126,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 .t4{background:linear-gradient(135deg,#050505 0%,#181818 40%,#2d2d2d 100%)}
 .t5{background:linear-gradient(135deg,#0a0f1a 0%,#152040 40%,#1e3060 100%)}
 .t6{background:linear-gradient(135deg,#0f0b02 0%,#2a2008 50%,#6b5210 100%)}
+.t7{background:linear-gradient(135deg,#160202 0%,#350d0d 50%,#640000 100%)}
 /* scanlines on thumbs */
 .wthumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);z-index:1;pointer-events:none}
 /* light leaks */
@@ -289,27 +291,28 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
     <p class="svc-sub rv d2">Full-stack creative production for brands, agencies, and founders scaling their digital presence globally.</p>
   </div>
   <div class="svc-grid rv d1">
+    
     <div class="svc-card">
       <div class="svc-n">01</div>
-      <span class="svc-icon">🎬</span>
+      <span class="svc-icon"><img src="images/PP.png" alt="Premiere Pro"></span>
       <h3 class="svc-name">Video Editing</h3>
       <p class="svc-desc">Cinematic cuts for YouTube, Instagram, and brand films. Story-first editing that hooks and holds attention from frame one.</p>
     </div>
     <div class="svc-card">
       <div class="svc-n">02</div>
-      <span class="svc-icon">⚡</span>
+      <span class="svc-icon"><img src="images/AE.png" alt="Premiere Pro"></span>
       <h3 class="svc-name">Motion Graphics</h3>
       <p class="svc-desc">Typography animation, kinetic visuals, and dynamic intros that bring your brand identity to life on screen.</p>
     </div>
     <div class="svc-card">
       <div class="svc-n">03</div>
-      <span class="svc-icon">🖼️</span>
+      <span class="svc-icon"><img src="images/PS.png" alt="Premiere Pro"></span>
       <h3 class="svc-name">Thumbnail Design</h3>
       <p class="svc-desc">Click-worthy thumbnails designed to maximize CTR. Bold, scroll-stopping visuals optimized for your audience and niche.</p>
     </div>
     <div class="svc-card">
       <div class="svc-n">04</div>
-      <span class="svc-icon">🤖</span>
+      <span class="svc-icon"><img src="images/AI.png" alt="Premiere Pro"></span>
       <h3 class="svc-name">AI-Powered Content</h3>
       <p class="svc-desc">AI-assisted video production, scriptwriting, and bulk content workflows — built for agencies that need to scale fast.</p>
     </div>
@@ -335,12 +338,12 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
     <div class="wcard" data-c="video">
       <div class="wthumb t1">
         <div class="thumb-icon">🎬</div>
-        <span class="thumb-lbl">TMT CREATIVE HOUSE</span>
+        <span class="thumb-lbl">vishaall.editor</span>
       </div>
       <div class="wover">
-        <span class="wcat">Brand Film</span>
-        <h3 class="wtitle">Agency Launch Reel 2025</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <span class="wcat">Reels and Videos</span>
+        <h3 class="wtitle">before after section</h3>
+        <a href="projects01.html" class="wlink">View Project →</a>
       </div>
     </div>
     <div class="wcard" data-c="video">
@@ -350,8 +353,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       </div>
       <div class="wover">
         <span class="wcat">Documentary</span>
-        <h3 class="wtitle">Education System Exposed</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <h3 class="wtitle">Long Form Youtube Documentaries</h3>
+        <a href="Projects02.html" class="wlink">View Project →</a>
       </div>
     </div>
     <div class="wcard" data-c="motion">
@@ -362,7 +365,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       <div class="wover">
         <span class="wcat">Motion</span>
         <h3 class="wtitle">Kinetic Typography Pack</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <a href="Project03.html" class="wlink">View Project →</a>
       </div>
     </div>
     <div class="wcard" data-c="video">
@@ -373,7 +376,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       <div class="wover">
         <span class="wcat">Social Reels</span>
         <h3 class="wtitle">Viral Reels Content Pack</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <a href="Project04.html" class="wlink">View Project →</a>
       </div>
     </div>
     <div class="wcard" data-c="motion">
@@ -384,18 +387,29 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       <div class="wover">
         <span class="wcat">Motion</span>
         <h3 class="wtitle">Logo Animation Series</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <a href="Project05.html" class="wlink">View Project →</a>
       </div>
     </div>
     <div class="wcard" data-c="design">
       <div class="wthumb t6">
+        <div class="thumb-icon">🖼️</div>
+        <span class="thumb-lbl">Motion Graphics</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Editing</span>
+        <h3 class="wtitle">Motion Graphics Editing</h3>
+        <a href="Project06.html" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="design">
+      <div class="wthumb t7">
         <div class="thumb-icon">🖼️</div>
         <span class="thumb-lbl">THUMBNAIL DESIGN</span>
       </div>
       <div class="wover">
         <span class="wcat">Design</span>
         <h3 class="wtitle">100-Thumbnail System</h3>
-        <a href="#" class="wlink">View Project →</a>
+        <a href="Project07.html" class="wlink">View Project →</a>
       </div>
     </div>
   </div>
@@ -443,11 +457,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       <div class="skills-wrap rv d3">
         <span class="stag">Premiere Pro</span>
         <span class="stag">After Effects</span>
-        <span class="stag">DaVinci Resolve</span>
         <span class="stag">Photoshop</span>
         <span class="stag">AI Workflows</span>
-        <span class="stag">Scriptwriting</span>
-        <span class="stag">Social Media</span>
       </div>
       <a href="#contact" class="btn-fill rv d4">Work With Me</a>
     </div>
@@ -459,7 +470,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   <div class="s-label rv" style="justify-content:center">Get In Touch</div>
   <h2 class="contact-big rv d1">LET'S<br><em>CREATE</em><br>TOGETHER</h2>
   <p class="contact-sub rv d2">Got a project in mind? Brand film, viral reel, or full content strategy — let's build something that converts.</p>
-  <a href="mailto:vishal@tmtcreativehouse.com" class="contact-email rv d2">vk4622368@gmail.com</a>
+  <a href="mailto:vk4622368@gmail.com" class="contact-email rv d2">vk4622368@gmail.com</a>
   <div class="socials rv d3">
     <a href="https://instagram.com/vishaall.editor" class="slink">Instagram</a>
     <a href="https://youtube.com/@vishaelkashyap?si=SLP75PUChvgat6Eo" class="slink">YouTube</a>
