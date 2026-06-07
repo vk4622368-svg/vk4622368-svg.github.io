@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal — Video Editor & Creative Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--card:#121212;
+  --text:#f0ede8;--muted:#666;--dim:#2a2a2a;
+  --accent:#E8541D;--accent-lite:rgba(232,84,29,0.18);
+  --border:#1c1c1c;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cd{position:fixed;width:9px;height:9px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .2s,width .2s,height .2s}
+#cr{position:fixed;width:34px;height:34px;border:1.5px solid rgba(232,84,29,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+
+/* GRAIN 
+.grain{position:fixed;inset:0;pointer-events:none;z-index:600;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .45s steps(1) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,1%)}30%{transform:translate(-1%,4%)}40%{transform:translate(4%,-2%)}50%{transform:translate(-3%,3%)}60%{transform:translate(2%,-4%)}70%{transform:translate(-4%,1%)}80%{transform:translate(1%,3%)}90%{transform:translate(3%,-1%)}
+}*/
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:26px 56px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,8,.96) 0%,transparent 100%);transition:background .3s,border-bottom .3s}
+.nav.scrolled{background:rgba(8,8,8,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--text);text-decoration:none}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--text)}
+.nav-btn{border:1.5px solid var(--accent);color:var(--accent);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 28px;text-decoration:none;display:inline-block;transition:background .3s,color .3s;background:transparent}
+.nav-btn:hover{background:var(--accent);color:#fff}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 56px 92px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:70vw;height:70vw;max-width:900px;max-height:900px;background:radial-gradient(circle,rgba(232,84,29,.11) 0%,transparent 68%);border-radius:50%;top:-25%;right:-15%;pointer-events:none;animation:glow 5s ease-in-out infinite}
+.hero-glow2{position:absolute;width:40vw;height:40vw;max-width:500px;background:radial-gradient(circle,rgba(232,84,29,.06) 0%,transparent 70%);border-radius:50%;bottom:10%;left:-10%;pointer-events:none;animation:glow 7s ease-in-out infinite reverse}
+@keyframes glow{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.12);opacity:1}}
+.hero-lines{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-lines::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.012) 60px,rgba(255,255,255,.012) 61px)}
+.hero-watermark{position:absolute;right:-2%;bottom:35%;font-family:'Bebas Neue',sans-serif;font-size:clamp(180px,28vw,400px);color:rgba(232,84,29,.025);line-height:1;pointer-events:none;user-select:none;letter-spacing:-.02em}
+.hero-year{position:absolute;bottom:92px;right:56px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:6px;color:var(--dim);writing-mode:vertical-rl}
+.hero-scroll-wrap{position:absolute;bottom:0;left:56px;display:flex;flex-direction:column;align-items:center;gap:10px;padding-bottom:32px}
+.hero-scroll-txt{font-size:9px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--dim);writing-mode:vertical-rl;}
+.hero-scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--dim),var(--accent));animation:linePulse 2s ease-in-out infinite}
+@keyframes linePulse{0%,100%{opacity:.4;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:22px;opacity:0;transform:translateY(14px);animation:fadeUp .7s .15s ease forwards;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--accent);flex-shrink:0}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(76px,14vw,200px);line-height:.88;letter-spacing:-.01em;margin-bottom:44px}
+.tline{display:block;overflow:hidden}
+.tline span{display:block;opacity:0;transform:translateY(110%)}
+.tline:nth-child(1) span{animation:slideUp 1.1s .3s cubic-bezier(.16,1,.3,1) forwards}
+.tline:nth-child(2) span{animation:slideUp 1.1s .5s cubic-bezier(.16,1,.3,1) forwards;color:var(--accent)}
+.tline:nth-child(3) span{animation:slideUp 1.1s .68s cubic-bezier(.16,1,.3,1) forwards}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;opacity:0;animation:fadeUp .9s 1.05s ease forwards}
+.hero-desc{max-width:400px;font-size:15px;line-height:1.78;color:#757575}
+.hero-cta{display:flex;gap:14px;flex-shrink:0;align-items:center}
+.btn-fill{display:inline-block;background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px 40px;text-decoration:none;border:1.5px solid var(--accent);transition:background .3s,color .3s,transform .2s}
+.btn-fill:hover{background:transparent;color:var(--accent);transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:12px;border:1.5px solid #252525;color:var(--text);font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px 36px;text-decoration:none;transition:border-color .3s,color .3s,transform .2s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.play-ring{width:22px;height:22px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;padding-left:2px}
+
+/* MARQUEE */
+.marquee{background:var(--accent);padding:13px 0;overflow:hidden}
+.marquee-track{display:flex;width:max-content;animation:mq 28s linear infinite}
+.mq-item{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:#fff;padding:0 16px;flex-shrink:0;white-space:nowrap}
+.mq-sep{color:rgba(255,255,255,.35);font-size:7px;display:flex;align-items:center;padding:0 4px;flex-shrink:0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION BASE */
+.sec{padding:120px 56px}
+.s-label{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.s-label::before{content:'';width:26px;height:1px;background:var(--accent);flex-shrink:0}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,6.5vw,82px);line-height:.93;letter-spacing:.01em}
+
+/* SERVICES */
+.svc-sec{background:var(--bg2)}
+.svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.svc-sub{max-width:300px;font-size:14px;line-height:1.75;color:var(--muted)}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border)}
+.svc-card{border-right:1px solid var(--border);padding:38px 28px 34px;background:var(--card);position:relative;overflow:hidden;transition:background .3s}
+.svc-card:last-child{border-right:none}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-card:hover{background:#161616}
+.svc-n{font-family:'Bebas Neue',sans-serif;font-size:60px;color:rgba(232,84,29,.07);line-height:1;margin-bottom:22px;transition:color .3s}
+.svc-card:hover .svc-n{color:rgba(232,84,29,.14)}
+.svc-icon{font-size:30px;margin-bottom:16px;display:block}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:27px;letter-spacing:1px;margin-bottom:12px;transition:color .3s}
+.svc-card:hover .svc-name{color:var(--accent)}
+.svc-desc{font-size:13px;color:var(--muted);line-height:1.72}
+
+/* WORK */
+.work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px}
+.ftabs{display:flex;gap:6px;flex-wrap:wrap}
+.ftab{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border:1px solid var(--border);color:var(--muted);background:transparent;cursor:none;transition:all .25s}
+.ftab:hover,.ftab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px}
+.wcard{position:relative;overflow:hidden;background:var(--card);cursor:none}
+.wcard:first-child{grid-column:span 2}
+.wthumb{position:absolute;inset:0;transition:transform .65s cubic-bezier(.16,1,.3,1)}
+.wcard:hover .wthumb{transform:scale(1.07)}
+.wover{position:absolute;inset:0;background:rgba(8,8,8,.86);display:flex;flex-direction:column;justify-content:flex-end;padding:26px;opacity:0;transition:opacity .35s}
+.wcard:hover .wover{opacity:1}
+.wcat{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.wtitle{font-family:'Bebas Neue',sans-serif;font-size:27px;letter-spacing:1px;margin-bottom:12px}
+.wlink{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:gap .2s}
+.wcard:hover .wlink{gap:13px}
+
+/* Gradient thumbs */
+.t1{background:linear-gradient(135deg,#1a0840 0%,#3d1168 45%,#7a2bde 70%,#e8541d 100%)}
+.t2{background:linear-gradient(160deg,#050e1e 0%,#0a2040 50%,#1a4a8a 100%)}
+.t3{background:linear-gradient(135deg,#1a0a06 0%,#5a1a08 40%,#e8541d 100%)}
+.t4{background:linear-gradient(135deg,#050505 0%,#181818 40%,#2d2d2d 100%)}
+.t5{background:linear-gradient(135deg,#0a0f1a 0%,#152040 40%,#1e3060 100%)}
+.t6{background:linear-gradient(135deg,#0f0b02 0%,#2a2008 50%,#6b5210 100%)}
+/* scanlines on thumbs */
+.wthumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);z-index:1;pointer-events:none}
+/* light leaks */
+.t1::after{content:'';position:absolute;top:-20%;left:40%;width:50%;height:90%;background:radial-gradient(ellipse,rgba(232,84,29,.3) 0%,transparent 70%)}
+.t2::after{content:'';position:absolute;top:5%;right:5%;width:55%;height:65%;background:radial-gradient(ellipse,rgba(80,130,255,.22) 0%,transparent 70%)}
+.t3::after{content:'';position:absolute;bottom:0;right:15%;width:60%;height:55%;background:radial-gradient(ellipse,rgba(232,84,29,.4) 0%,transparent 70%)}
+.thumb-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:56px;opacity:.18;z-index:2}
+.thumb-lbl{position:absolute;bottom:14px;left:14px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.15);z-index:2}
+
+/* STATS */
+.stats{background:var(--accent);padding:76px 56px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{text-align:center;border-right:1px solid rgba(255,255,255,.15);padding:16px 0}
+.stat-item:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7.5vw,92px);line-height:1;color:#fff;display:block;letter-spacing:-.02em}
+.stat-l{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:6px;display:block}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center}
+.aimg-wrap{position:relative}
+.aimg{width:100%;aspect-ratio:3/4;background:var(--card);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.aimg-bg{position:absolute;inset:0;background:linear-gradient(135deg,#150a04 0%,#3d1a08 50%,rgba(232,84,29,.12) 100%)}
+.aimg-ph{font-size:130px;opacity:.1;position:relative;z-index:1}
+.aimg-border{position:absolute;right:-18px;bottom:-18px;width:calc(100% - 36px);height:calc(100% - 36px);border:2px solid rgba(232,84,29,.35);pointer-events:none}
+.about-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,5.5vw,68px);line-height:.93;margin-bottom:22px}
+.about-body{font-size:15px;color:var(--muted);line-height:1.82;margin-bottom:30px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.stag{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);color:#666;transition:all .25s;cursor:none}
+.stag:hover{border-color:var(--accent);color:var(--accent)}
+
+/* CONTACT */
+.contact-sec{background:var(--bg2);text-align:center}
+.contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,11.5vw,158px);line-height:.87;margin-bottom:24px;letter-spacing:-.01em}
+.contact-big em{font-style:normal;color:var(--accent)}
+.contact-sub{font-size:15px;color:var(--muted);line-height:1.76;max-width:440px;margin:0 auto 38px}
+.contact-email{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,2.4vw,28px);letter-spacing:3px;color:var(--accent);text-decoration:none;margin-bottom:46px;transition:opacity .25s}
+.contact-email:hover{opacity:.6}
+.socials{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.slink{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;display:inline-flex;align-items:center;gap:7px}
+.slink::before{content:'↗';font-size:13px}
+.slink:hover{color:var(--accent)}
+
+/* FOOTER */
+.footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 56px;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}
+.footer-logo em{font-style:normal;color:var(--accent)}
+.footer-agency{font-size:12px;color:var(--muted);letter-spacing:1px}
+.footer-agency span{color:var(--accent)}
+.footer-copy{font-size:12px;color:#333}
+
+/* ANIMATIONS */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(38px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav{padding:20px 28px}
+  .nav-links{display:none}
+  .sec,.hero{padding:80px 28px}
+  .hero{padding-bottom:80px}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-card:nth-child(2){border-right:none}
+  .work-grid{grid-template-columns:1fr;grid-auto-rows:220px}
+  .wcard:first-child{grid-column:1}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .about-grid{grid-template-columns:1fr}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:28px}
+  .footer{flex-direction:column;gap:14px;text-align:center;padding:24px 28px}
+  .hero-watermark{display:none}
+  .stats{padding:60px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cd"></div>
+<div id="cr"></div>
+
+<!-- GRAIN -->
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-logo">VISHAAL<em>.EDITOR</em></a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Hire Me</a>
+</nav>
+
+<!-- ======= HERO ======= -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-lines"></div>
+  <span class="hero-watermark">Vishal</span>
+  <span class="hero-year">© 2026</span>
+  <div class="hero-scroll-wrap">
+    <span class="hero-scroll-txt">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Available for International Projects</p>
+    <h1 class="hero-title">
+      <span class="tline"><span>VIDEO</span></span>
+      <span class="tline"><span>EDITOR</span></span>
+      <span class="tline"><span>&amp; CREATIVE DIRECTOR</span></span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">Cinematic stories for brands that want to be remembered. Reels, docs, motion graphics &amp; everything in between — built for global audiences from India.</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-fill">View Work</a>
+        <a href="#contact" class="btn-ghost">
+          <span class="play-ring">&#9654;</span>
+          Watch Reel
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="mq-item">Video Editing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Motion Graphics</span><span class="mq-sep">◆</span>
+    <!-- <span class="mq-item">Thumbnail Design</span><span class="mq-sep">◆</span> -->
+    <span class="mq-item">Color Grading</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Reels &amp; Shorts</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Brand Films</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Documentary</span><span class="mq-sep">◆</span>
+    <span class="mq-item">AI Content</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Video Editing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Motion Graphics</span><span class="mq-sep">◆</span>
+    <!-- <span class="mq-item">Thumbnail Design</span><span class="mq-sep">◆</span> -->
+    <span class="mq-item">Color Grading</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Reels &amp; Shorts</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Brand Films</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Documentary</span><span class="mq-sep">◆</span>
+    <span class="mq-item">AI Content</span><span class="mq-sep">◆</span>
+  </div>
+</div>
+
+<!-- ======= SERVICES ======= -->
+<section class="sec svc-sec" id="services">
+  <div class="svc-head">
+    <div>
+      <div class="s-label rv">What I Do</div>
+      <h2 class="s-title rv d1">CORE<br>SERVICES</h2>
+    </div>
+    <p class="svc-sub rv d2">Full-stack creative production for brands, agencies, and founders scaling their digital presence globally.</p>
+  </div>
+  <div class="svc-grid rv d1">
+    <div class="svc-card">
+      <div class="svc-n">01</div>
+      <span class="svc-icon">🎬</span>
+      <h3 class="svc-name">Video Editing</h3>
+      <p class="svc-desc">Cinematic cuts for YouTube, Instagram, and brand films. Story-first editing that hooks and holds attention from frame one.</p>
+    </div>
+    <div class="svc-card">
+      <div class="svc-n">02</div>
+      <span class="svc-icon">⚡</span>
+      <h3 class="svc-name">Motion Graphics</h3>
+      <p class="svc-desc">Typography animation, kinetic visuals, and dynamic intros that bring your brand identity to life on screen.</p>
+    </div>
+    <div class="svc-card">
+      <div class="svc-n">03</div>
+      <span class="svc-icon">🖼️</span>
+      <h3 class="svc-name">Thumbnail Design</h3>
+      <p class="svc-desc">Click-worthy thumbnails designed to maximize CTR. Bold, scroll-stopping visuals optimized for your audience and niche.</p>
+    </div>
+    <div class="svc-card">
+      <div class="svc-n">04</div>
+      <span class="svc-icon">🤖</span>
+      <h3 class="svc-name">AI-Powered Content</h3>
+      <p class="svc-desc">AI-assisted video production, scriptwriting, and bulk content workflows — built for agencies that need to scale fast.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= WORK ======= -->
+<section class="sec" id="work" style="background:var(--bg);padding-top:0">
+  <div class="work-head">
+    <div>
+      <div class="s-label rv">Portfolio</div>
+      <h2 class="s-title rv d1">SELECTED<br>WORK</h2>
+    </div>
+    <div class="ftabs rv d2">
+      <button class="ftab active" data-f="all">All</button>
+      <button class="ftab" data-f="video">Video</button>
+      <button class="ftab" data-f="motion">Motion</button>
+      <button class="ftab" data-f="design">Design</button>
+    </div>
+  </div>
+
+  <div class="work-grid rv">
+    <div class="wcard" data-c="video">
+      <div class="wthumb t1">
+        <div class="thumb-icon">🎬</div>
+        <span class="thumb-lbl">TMT CREATIVE HOUSE</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Brand Film</span>
+        <h3 class="wtitle">Agency Launch Reel 2025</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="video">
+      <div class="wthumb t2">
+        <div class="thumb-icon">🎥</div>
+        <span class="thumb-lbl">DOCUMENTARY</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Documentary</span>
+        <h3 class="wtitle">Education System Exposed</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="motion">
+      <div class="wthumb t3">
+        <div class="thumb-icon">⚡</div>
+        <span class="thumb-lbl">MOTION GRAPHICS</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Motion</span>
+        <h3 class="wtitle">Kinetic Typography Pack</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="video">
+      <div class="wthumb t5">
+        <div class="thumb-icon">📱</div>
+        <span class="thumb-lbl">INSTAGRAM REELS</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Social Reels</span>
+        <h3 class="wtitle">Viral Reels Content Pack</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="motion">
+      <div class="wthumb t4">
+        <div class="thumb-icon">✦</div>
+        <span class="thumb-lbl">LOGO ANIMATION</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Motion</span>
+        <h3 class="wtitle">Logo Animation Series</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+    <div class="wcard" data-c="design">
+      <div class="wthumb t6">
+        <div class="thumb-icon">🖼️</div>
+        <span class="thumb-lbl">THUMBNAIL DESIGN</span>
+      </div>
+      <div class="wover">
+        <span class="wcat">Design</span>
+        <h3 class="wtitle">100-Thumbnail System</h3>
+        <a href="#" class="wlink">View Project →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= STATS ======= -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-n" data-t="100" data-s="+">0</span>
+      <span class="stat-l">Projects Done</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n" data-t="3" data-s="+">0</span>
+      <span class="stat-l">Years Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n" data-t="11" data-s="K+">0</span>
+      <span class="stat-l">Followers</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n" data-t="25" data-s="+">0</span>
+      <span class="stat-l">Happy Clients</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======= ABOUT ======= -->
+<section class="sec" id="about" style="background:var(--bg)">
+  <div class="about-grid">
+    <div class="aimg-wrap rv">
+      <div class="aimg">
+        <div class="aimg-bg"></div>
+        <img src="1758030881453.jpg" style="width:100%;height:120%;object-fit:cover;position:absolute;inset:0">
+      </div>
+      <div class="aimg-border"></div>
+    </div>
+    <div>
+      <div class="s-label rv">About Me</div>
+      <h2 class="about-title rv d1">VISHAL<br><span style="color:var(--accent)">KASHYAP</span></h2>
+      <p class="about-body rv d2">
+        Video editor and content creator based in India — building cinematic stories for brands and creators who want to dominate their space.<br><br>
+        Founder of <strong style="color:var(--text)">TMT Creative House</strong>, a full-service creative agency targeting US &amp; UK clients. From solo freelancer to agency owner — my work spans documentaries, brand films, social reels, motion graphics, and AI-powered content pipelines.
+      </p>
+      <div class="skills-wrap rv d3">
+        <span class="stag">Premiere Pro</span>
+        <span class="stag">After Effects</span>
+        <span class="stag">DaVinci Resolve</span>
+        <span class="stag">Photoshop</span>
+        <span class="stag">AI Workflows</span>
+        <span class="stag">Scriptwriting</span>
+        <span class="stag">Social Media</span>
+      </div>
+      <a href="#contact" class="btn-fill rv d4">Work With Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= CONTACT ======= -->
+<section class="sec contact-sec" id="contact">
+  <div class="s-label rv" style="justify-content:center">Get In Touch</div>
+  <h2 class="contact-big rv d1">LET'S<br><em>CREATE</em><br>TOGETHER</h2>
+  <p class="contact-sub rv d2">Got a project in mind? Brand film, viral reel, or full content strategy — let's build something that converts.</p>
+  <a href="mailto:vishal@tmtcreativehouse.com" class="contact-email rv d2">vk4622368@gmail.com</a>
+  <div class="socials rv d3">
+    <a href="https://instagram.com/vishaall.editor" class="slink">Instagram</a>
+    <a href="https://youtube.com/@vishaelkashyap?si=SLP75PUChvgat6Eo" class="slink">YouTube</a>
+    <a href="https://www.linkedin.com/in/vishal-kashyap-716106372?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="slink">LinkedIn</a>
+    <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" class="slink">Email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">VISHAALL<em>.editor</em></span>
+  <!-- <span class="footer-agency">TMT <span>Creative House</span></span> -->
+  <span class="footer-copy">© 2026 · All rights reserved</span>
+</footer>
+
+<script>
+// Cursor
+const cd = document.getElementById('cd');
+const cr = document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(anim)})();
+document.querySelectorAll('a,button,.svc-card,.wcard,.stag').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cd.style.transform='translate(-50%,-50%) scale(1.9)';cr.style.width='50px';cr.style.height='50px';cr.style.borderColor='rgba(232,84,29,.75)'});
+  el.addEventListener('mouseleave',()=>{cd.style.transform='translate(-50%,-50%) scale(1)';cr.style.width='34px';cr.style.height='34px';cr.style.borderColor='rgba(232,84,29,.5)'});
+});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80));
+
+// Reveal
+const ro=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+// Counter
+function cnt(el,end,suf){
+  const dur=1900,t0=performance.now();
+  function run(t){const p=Math.min((t-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*end)+suf;if(p<1)requestAnimationFrame(run);else el.textContent=end+suf}
+  requestAnimationFrame(run);
+}
+const statsEl=document.querySelector('.stats');
+const so=new IntersectionObserver(en=>{if(en[0].isIntersecting){document.querySelectorAll('.stat-n').forEach(el=>cnt(el,+el.dataset.t,el.dataset.s||''));so.disconnect()}},{threshold:.5});
+if(statsEl)so.observe(statsEl);
+
+// Filter
+document.querySelectorAll('.ftab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const f=tab.dataset.f;
+    document.querySelectorAll('.wcard').forEach(c=>{
+      const show=f==='all'||c.dataset.c===f;
+      c.style.display=show?'':'none';
+      if(show){c.style.opacity='0';setTimeout(()=>{c.style.transition='opacity .4s';c.style.opacity='1'},20)}
+    });
+  });
+});
+</script>
+</body>
+</html>
