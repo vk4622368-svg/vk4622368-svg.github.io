@@ -123,40 +123,38 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   .hero-watermark{display:none}
   .stats{padding:60px 28px}
 
-  /*Videos CSS*/
-.projects-grid{
+  .thumbnail-gallery{
     width:90%;
     max-width:1400px;
-    margin:60px auto;
+    margin:80px auto;
 
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
+    repeat(auto-fit,minmax(350px,1fr));
 
     gap:25px;
 }
 
-.project-item{
-    background:#111;
-    border-radius:15px;
+.thumb-card{
     overflow:hidden;
+    border-radius:15px;
+    background:#111;
+    cursor:pointer;
 }
 
-.project-item video{
+.thumb-card img{
     width:100%;
-    height:650px;
-
-    object-fit:cover;
-
     display:block;
+
+    transition:0.4s ease;
 }
-.project-item video{
-    width:100%;
-    aspect-ratio:9/16;
-    object-fit:cover;
+
+.thumb-card:hover img{
+    transform:scale(1.05);
 }
 }
+
 
 </style>
 </head>
@@ -167,31 +165,35 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 <!-- GRAIN -->
 <div class="grain"></div>
 
-<section class="projects-grid">
+<section class="thumbnail-gallery">
 
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/Sequence 01.mp4" type="video/mp4">
-        </video>
+    <div class="thumb-card">
+        <img src="images/1.jpg" alt="Thumbnail 1">
     </div>
 
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video2.mp4" type="video/mp4">
-        </video>
+    <div class="thumb-card">
+        <img src="images/2.jpg" alt="Thumbnail 2">
     </div>
 
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video3.mp4" type="video/mp4">
-        </video>
+    <div class="thumb-card">
+        <img src="images/3.jpg" alt="Thumbnail 3">
     </div>
 
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video4.mp4" type="video/mp4">
-        </video>
+    <div class="thumb-card">
+        <img src="images/4.jpg" alt="Thumbnail 4">
     </div>
+
+    <div class="thumb-card">
+        <img src="images/5.jpg" alt="Thumbnail 5">
+    </div>
+
+    <div class="thumb-card">
+        <img src="images/X.jpg" alt="Thumbnail 6">
+    </div>
+
+    <div id="lightbox">
+    <img id="lightbox-img">
+</div>
 
 </section>
 
@@ -222,6 +224,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   <span class="footer-copy">© 2026 · All rights reserved</span>
 </footer>
 <script>
+
 // Cursor
 const cd = document.getElementById('cd');
 const cr = document.getElementById('cr');
@@ -264,5 +267,23 @@ document.querySelectorAll('.ftab').forEach(tab=>{
     });
   });
 });
+</script>
+<script>
+
+const thumbs=document.querySelectorAll('.thumb-card img');
+const lightbox=document.getElementById('lightbox');
+const lightboxImg=document.getElementById('lightbox-img');
+
+thumbs.forEach(img=>{
+    img.addEventListener('click',()=>{
+        lightbox.style.display='flex';
+        lightboxImg.src=img.src;
+    });
+});
+
+lightbox.addEventListener('click',()=>{
+    lightbox.style.display='none';
+});
+
 </script>
 </body>
