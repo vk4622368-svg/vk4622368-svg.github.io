@@ -122,8 +122,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   .footer{flex-direction:column;gap:14px;text-align:center;padding:24px 28px}
   .hero-watermark{display:none}
   .stats{padding:60px 28px}
-
-  .thumbnail-gallery{
+}
+.thumbnail-gallery{
     width:90%;
     max-width:1400px;
     margin:80px auto;
@@ -153,8 +153,21 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 .thumb-card:hover img{
     transform:scale(1.05);
 }
+#lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.95);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 }
 
+#lightbox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:12px;
+}
 
 </style>
 </head>
@@ -164,6 +177,21 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 <div id="cr"></div>
 <!-- GRAIN -->
 <div class="grain"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-logo">VISHAAL<em>.EDITOR</em></a>
+  <ul class="nav-links">
+  </ul>
+  <a href="#contact" class="nav-btn">Hire Me</a>
+</nav>
+
+<section class="sec">
+    <div class="s-label">Thumbnail Portfolio</div>
+    <h2 class="s-title">
+        HIGH CTR<br>THUMBNAILS
+    </h2>
+</section>
 
 <section class="thumbnail-gallery">
 
@@ -197,13 +225,6 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 
 </section>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="#home" class="nav-logo">VISHAAL<em>.EDITOR</em></a>
-  <ul class="nav-links">
-  </ul>
-  <a href="#contact" class="nav-btn">Hire Me</a>
-</nav>
 <!-- ======= CONTACT ======= -->
 <section class="sec contact-sec" id="contact">
   <div class="s-label rv" style="justify-content:center">Get In Touch</div>
@@ -268,22 +289,15 @@ document.querySelectorAll('.ftab').forEach(tab=>{
   });
 });
 </script>
-<script>
 
+<script>
 const thumbs=document.querySelectorAll('.thumb-card img');
 const lightbox=document.getElementById('lightbox');
 const lightboxImg=document.getElementById('lightbox-img');
 
 thumbs.forEach(img=>{
-    img.addEventListener('click',()=>{
-        lightbox.style.display='flex';
-        lightboxImg.src=img.src;
-    });
-});
-
-lightbox.addEventListener('click',()=>{
-    lightbox.style.display='none';
-});
-
+    img.addEventListener('click',()=>{lightbox.style.display='flex';lightboxImg.src=img.src;});});
+lightbox.addEventListener('click',()=>{lightbox.style.display='none';});
 </script>
+
 </body>
