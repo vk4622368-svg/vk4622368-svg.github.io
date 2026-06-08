@@ -122,40 +122,28 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   .footer{flex-direction:column;gap:14px;text-align:center;padding:24px 28px}
   .hero-watermark{display:none}
   .stats{padding:60px 28px}
-
-  /*Videos CSS*/
-.projects-grid{
+}
+.reels-grid{
     width:90%;
     max-width:1400px;
-    margin:60px auto;
+    margin:120px auto 80px;
 
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
     gap:25px;
 }
 
-.project-item{
+.reel-card{
     background:#111;
-    border-radius:15px;
+    border-radius:16px;
     overflow:hidden;
 }
 
-.project-item video{
-    width:100%;
-    height:650px;
-
-    object-fit:cover;
-
-    display:block;
-}
-.project-item video{
+.reel-card video{
     width:100%;
     aspect-ratio:9/16;
     object-fit:cover;
-}
+    display:block;
 }
 
 </style>
@@ -167,34 +155,6 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
 <!-- GRAIN -->
 <div class="grain"></div>
 
-<section class="projects-grid">
-
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/Sequence 01.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video2.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video3.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="project-item">
-        <video autoplay muted loop playsinline controls>
-            <source src="videos/video4.mp4" type="video/mp4">
-        </video>
-    </div>
-
-</section>
-
 <!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#home" class="nav-logo">VISHAAL<em>.EDITOR</em></a>
@@ -202,6 +162,23 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   </ul>
   <a href="#contact" class="nav-btn">Hire Me</a>
 </nav>
+
+<section class="reels-grid">
+
+    <div class="reel-card">
+        <video controls preload="metadata" poster="images/thumb1.jpg">
+            <source src="videos/Typo Level 3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="reel-card">
+        <video controls preload="metadata" poster="images/thumb2.jpg">
+            <source src="videos/Typography Level 5.mp4" type="video/mp4">
+        </video>
+    </div>
+
+</section>
+
 <!-- ======= CONTACT ======= -->
 <section class="sec contact-sec" id="contact">
   <div class="s-label rv" style="justify-content:center">Get In Touch</div>
