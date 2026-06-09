@@ -204,6 +204,65 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
   .hero-watermark{display:none}
   .stats{padding:60px 28px}
 }
+.clients-section{
+    padding:120px 0;
+    overflow:hidden;
+}
+
+.clients-title{
+    text-align:center;
+    font-size:48px;
+    margin-bottom:50px;
+}
+
+.clients-slider{
+    overflow:hidden;
+    width:100%;
+}
+
+.clients-track{
+    display:flex;
+    gap:25px;
+
+    width:max-content;
+
+    animation:scrollClients 35s linear infinite;
+}
+
+.clients-track:hover{
+    animation-play-state:paused;
+}
+
+.clients-track a{
+    flex-shrink:0;
+}
+
+.clients-track img{
+    width:320px;
+    height:570px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    transition:.4s;
+}
+
+.clients-track img:hover{
+    transform:scale(1.05);
+}
+
+@keyframes scrollClients{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
+}
 </style>
 </head>
 <body>
@@ -463,6 +522,32 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overfl
       <a href="#contact" class="btn-fill rv d4">Work With Me</a>
     </div>
   </div>
+</section>
+
+<!-- ======= CLIENTS SECTION ======= -->
+ <section class="clients-section">
+    <h2 class="clients-title">
+        CLIENTS I'VE WORKED WITH
+    </h2>
+    <div class="clients-slider">
+        <div class="clients-track">
+
+            <a> <img src="clients/1.jpg"> </a>
+            <a> <img src="clients/2.jpg"> </a>
+            <a> <img src="clients/3.jpg"> </a>
+            <a> <img src="clients/4.jpg"> </a>
+            <a> <img src="clients/5.jpg"> </a>
+            <a> <img src="clients/6.jpg"> </a>
+            <a> <img src="clients/7.jpg"> </a>
+            <a> <img src="clients/8.jpg"> </a>
+
+            <!-- Duplicate for infinite loop -->
+            <a> <img src="clients/1.jpg"> </a>
+            <a> <img src="clients/2.jpg"> </a>
+            <a> <img src="clients/3.jpg"> </a>
+
+        </div>
+    </div>
 </section>
 
 <!-- ======= CONTACT ======= -->
