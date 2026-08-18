@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal — Photographer &amp; Visual Storyteller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #0a0a09;
+    --bg-alt:    #121210;
+    --paper:     #f4f2ec;
+    --amber:     #d4a24e;
+    --amber-dim: #8a6c34;
+    --muted:     #8a8a82;
+    --line:      #26261f;
+    --display:   'Bebas Neue', sans-serif;
+    --body:      'Inter', sans-serif;
+    --mono:      'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--paper);
+    font-family:var(--body);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img{display:block;max-width:100%;}
+
+  /* grain overlay */
+  .grain{
+    position:fixed;inset:0;pointer-events:none;z-index:999;
+    opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--amber);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:500;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 5vw;
+    background:linear-gradient(to bottom, rgba(10,10,9,.9), transparent);
+  }
+  .logo{
+    font-family:var(--display);
+    font-size:1.6rem;letter-spacing:.03em;
+  }
+  .logo em{font-style:normal;color:var(--amber);}
+  nav ul{display:flex;gap:34px;align-items:center;}
+  nav a{font-size:.85rem;letter-spacing:.03em;color:var(--paper);opacity:.8;transition:opacity .2s;}
+  nav a:hover{opacity:1;color:var(--amber);}
+  .nav-cta{
+    border:1px solid var(--amber);
+    padding:9px 20px;border-radius:2px;
+    font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--amber)!important;opacity:1!important;
+  }
+  .nav-cta:hover{background:var(--amber);color:var(--bg)!important;}
+  .cross-link{
+    display:flex;align-items:center;gap:6px;
+    font-family:var(--mono);font-size:.72rem;
+    color:var(--muted);opacity:1!important;
+  }
+  .cross-link:hover{color:var(--amber);}
+  .menu-btn{display:none;}
+
+  /* marquee */
+  .marquee-wrap{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--bg-alt);overflow:hidden;padding:16px 0;
+  }
+  .marquee{display:flex;white-space:nowrap;animation:scroll 28s linear infinite;width:max-content;}
+  .marquee span{
+    font-family:var(--display);font-size:1.4rem;letter-spacing:.04em;
+    padding:0 22px;color:var(--muted);text-transform:uppercase;
+  }
+  .marquee span em{color:var(--amber);font-style:normal;padding-left:22px;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  footer{
+    padding:30px 5vw;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    font-family:var(--mono);font-size:.72rem;color:var(--muted);
+  }
+  footer a:hover{color:var(--amber);}
+
+  @media (max-width:900px){
+    nav ul{gap:16px;}
+    nav ul li:not(:last-child):not(.cross-link-item){display:none;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery{columns:2 160px;}
+    .about{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .frame-corner,.hero-tag{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<section>
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Portrait <em>◆</em></span><span>solo <em>◆</em></span><span>Street <em>◆</em></span><span>Editorial <em>◆</em></span><span>Product <em>◆</em></span><span>Film Photography <em>◆</em></span>
+    <span>Portrait <em>◆</em></span><span>solo <em>◆</em></span><span>Street <em>◆</em></span><span>Editorial <em>◆</em></span><span>Product <em>◆</em></span><span>Film Photography <em>◆</em></span>
+  </div>
+</div>
+</section>
+
+<h1>Nature Collection</h1>
+
+<div class="gallery">
+<img src="images/nature/1.jpg">
+<img src="images/nature/2.jpg">
+<img src="images/nature/3.jpg">
+<img src="images/nature/4.jpg">
+<img src="images/nature/5.jpg">
+<img src="images/nature/6.jpg">
+<img src="images/nature/7.jpg">
+<img src="images/nature/8.jpg">
+<img src="images/nature/9.jpg">
+<img src="images/nature/10.jpg">
+<img src="images/nature/11.jpg">
+<img src="images/nature/12.jpg">
+</div>
+
+<div id="lightbox">
+<span class="close">&times;</span>
+<span class="prev">&#10094;</span>
+<img id="preview">
+<span class="next">&#10095;</span>
+</div>
+
+<script>
+
+const images=document.querySelectorAll(".gallery img");
+const lightbox=document.getElementById("lightbox");
+const preview=document.getElementById("preview");
+let current=0;
+function show(index){
+current=index;
+preview.src=images[index].src;
+lightbox.style.display="flex";
+}
+images.forEach((img,i)=>{
+img.onclick=()=>show(i);
+});
+document.querySelector(".close").onclick=()=>{
+lightbox.style.display="none";
+}
+document.querySelector(".next").onclick=()=>{
+current++;
+if(current>=images.length) current=0;
+preview.src=images[current].src;
+}
+document.querySelector(".prev").onclick=()=>{
+current--;
+if(current<0) current=images.length-1
+preview.src=images[current].src;
+}
+
+document.onkeydown=e=>{
+if(lightbox.style.display!="flex") return;
+if(e.key=="ArrowRight") document.querySelector(".next").click();
+if(e.key=="ArrowLeft") document.querySelector(".prev").click();
+if(e.key=="Escape") lightbox.style.display="none";
+}
+lightbox.onclick=e=>{
+if(e.target==lightbox)
+lightbox.style.display="none";
+}
+</script>
+
+<footer>
+  <span>VISHAL.PHOTOGRAPHY © 2026 · All rights reserved</span>
+  <a href="https://vk4622368-svg.github.io/">↗ vishal's video editing portfolio</a>
+</footer>
+</body>
+</html>
